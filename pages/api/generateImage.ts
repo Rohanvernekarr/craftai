@@ -1,33 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { generateImage } from "../../lib/huggingface";
+import type { ImageRequest, ImageResponse } from "../../types";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<ImageResponse>
 ) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+  const { prompt } = req.body as ImageRequest;
+  if (!prompt || typeof prompt !== "string") {
+    return res.status(400).json({ error: "Prompt is required" });
+  }
   try {
-    const { prompt } = req.body;
-    const resp = await fetch(
-      "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.HF_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ inputs: prompt }),
-      }
-    );
-
-    if (!resp.ok) {
-      throw new Error(`Error: ${await resp.text()}`);
-    }
-
-    const buffer = await resp.arrayBuffer();
-    const base64Image = Buffer.from(buffer).toString("base64");
-
-    res.status(200).json({ image: `data:image/png;base64,${base64Image}` });
+    const image = await generateImage(prompt);
+    res.status(200).json({ image });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      error:
+        error?.message ||
+        "Failed to generate image. Please try again later.",
+    });
   }
 }
