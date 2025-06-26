@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { generateText } from "../../lib/huggingface";
 import type { TextRequest, TextResponse } from "../../types";
+import { generateGeminiText } from "../../lib/gemini";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,7 +14,7 @@ export default async function handler(
     return res.status(400).json({ error: "Prompt is required" });
   }
   try {
-    const text = await generateText(prompt);
+    const text = await generateGeminiText(prompt);
     res.status(200).json({ text });
   } catch (error: any) {
     res.status(500).json({
