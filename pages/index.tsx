@@ -48,7 +48,7 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-800 dark:bg-gray-950 flex flex-col items-center py-8 transition-colors duration-300">
       <div className="w-full max-w-2xl flex flex-col flex-1 bg-white/90 dark:bg-gray-900/90 rounded-xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-800">
-        <header className="relative px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-gradient-to-r from-indigo-700 via-purple-800 to-gray-900 dark:from-indigo-900 dark:via-purple-900 dark:to-gray-950">
+        <header className="relative px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-gradient-to-r from-zinc-700 via-gray-800 to-gray-900 dark:from-indigo-900 dark:via-purple-900 dark:to-gray-950">
           <h1 className="text-4xl font-serif text-white tracking-tight drop-shadow">Craft.AI</h1>
           <p className="text-sm text-indigo-200 mt-1">Your AI chat assistant</p>
          
@@ -62,7 +62,7 @@ const Home: React.FC = () => {
               <div
                 className={`rounded-2xl px-5 py-3 max-w-[80%] shadow text-base whitespace-pre-line font-medium transition-colors duration-300 ${
                   msg.role === "user"
-                    ? "bg-gradient-to-br from-indigo-600 to-purple-700 text-white self-end"
+                    ? "bg-gradient-to-br from-zinc-600 to-gray-700 text-white self-end"
                     : "bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 self-start border border-gray-100 dark:border-gray-700"
                 }`}
               >
